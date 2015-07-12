@@ -7,15 +7,12 @@ public class ContainerStack implements IContainerStorage {
 
 	@Override
 	public void addContainer(ShippingContainer container) {
-		// Get the destination of a container
 		String dest = container.getDestination();
 		
-		// Add a new destination if it doesn't already exist
 		if (!containers.containsKey(dest)) {
 			containers.put(dest, new Stack<ShippingContainer>());
 		}
 
-		// Add container to its destination
 		containers.get(dest).push(container);
 	}
 

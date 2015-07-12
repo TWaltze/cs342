@@ -1,0 +1,26 @@
+package pa1;
+
+import java.util.*;
+
+public class ContainerStack implements IContainerStorage {
+	private Map<String, Stack> containers = new HashMap<String, Stack>();
+
+	@Override
+	public void addContainer(ShippingContainer container) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public ShippingContainer removeContainer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ShippingContainer[] getContainersToDest(String dest) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

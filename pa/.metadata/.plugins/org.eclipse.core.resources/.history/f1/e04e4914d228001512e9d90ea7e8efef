@@ -1,0 +1,7 @@
+package pa1;
+
+public interface IContainerStorage {
+	public abstract void addContainer(ShippingContainer container);
+	
+	public abstract ShippingContainer removeContainer(ShippingContainer container);
+}

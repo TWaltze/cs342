@@ -1,0 +1,14 @@
+package pa1;
+
+public class ShippingContainer {
+
+	private String id;
+	
+	public ShippingContainer(String newId){
+		this.id = newId;
+	}
+	
+	public String getId() {
+		return id;
+	}
+}

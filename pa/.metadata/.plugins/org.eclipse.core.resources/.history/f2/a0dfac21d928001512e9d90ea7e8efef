@@ -1,0 +1,18 @@
+package pa1;
+
+public class Client {
+	public static final int NUM_OF_CONTAINERS = 50;
+	public static String[] destinations = new String[]{"BOS", "SFO", "LAX", "SJC", "IAD"};
+
+	public static void main(String[] args) {
+		IContainerStorage containers = new ContainerQueue();
+		
+		containers.addContainer(new ShippingContainer("BOS01"));
+		containers.addContainer(new ShippingContainer("BOS02"));
+		containers.addContainer(new ShippingContainer("BOS03"));
+		
+		for (int i = 0; i < NUM_OF_CONTAINERS; i++) {
+			
+		}
+	}
+}

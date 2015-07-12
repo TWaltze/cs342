@@ -1,0 +1,19 @@
+package pa1;
+
+import java.util.ArrayList;
+
+public class ContainerQueue implements IContainerStorage {
+
+	@Override
+	public void addContainer(ShippingContainer container) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public ArrayList<ShippingContainer> getContainersToDest(String dest) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

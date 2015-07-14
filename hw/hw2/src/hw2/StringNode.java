@@ -2,14 +2,14 @@ package hw2;
 
 public class StringNode {
 	private StringNode next;	// Next node in list
-	private Object data;		// Stored data
+	private String data;		// Stored data
 	
-	public StringNode(Object data) {
+	public StringNode(String data) {
 		this.data = data;
 		this.next = null;
 	}
 	
-	public StringNode(Object data, StringNode next) {
+	public StringNode(String data, StringNode next) {
 		this.data = data;
 		this.next = next;
 	}
@@ -18,7 +18,7 @@ public class StringNode {
 		return this.data;
 	}
 	
-	public void setData(Object data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 	
@@ -28,5 +28,9 @@ public class StringNode {
 	
 	public void setNext(StringNode next) {
 		this.next = next;
+	}
+	
+	public String toString() {
+		return this.data;
 	}
 }

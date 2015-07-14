@@ -6,84 +6,90 @@ public class StringLinkedBag implements Cloneable {
 	
 	// LinkedList constructor
 	public StringLinkedBag() {
-		head = new StringNode(null);
+		head = null;
 		count = 0;
 	}
 	
 	// Appends the specified element to the end of this list.
-	public void add(Object data) {
+	public void add(String data) {
 		StringNode temp = new StringNode(data);
-		StringNode current = head;
 		
-		// starting at the head node, crawl to the end of the list
-		while(current.getNext() != null) {
-			current = current.getNext();
+		if (head == null) {
+			// If the list is empty, make it the head
+			head = temp;
+		} else {
+			StringNode current = head;
+			
+			// starting at the head node, crawl to the end of the list
+			while(current.getNext() != null) {
+				current = current.getNext();
+			}
+			
+			// Set last node's "next" reference to our new node
+			current.setNext(temp);
 		}
 		
-		// the last node's "next" reference set to our new node
-		current.setNext(temp);
 		// increment the element count
 		count++;
 	}
 	
-	// Insert the element at the given position
-	public void add(Object data, int index) {
-		StringNode temp = new StringNode(data);
-		StringNode current = head;
-		
-		// Step through list until you reach the given positon
-		for (int i = 1; i < index && current.getNext() != null; i++) {
-			current = current.getNext();
+	public void addAll(StringLinkedBag bag) {
+		if (head == null) {
+			head = bag.grab();
+		} else {
+			StringNode last = head;
+			
+			while (last.getNext() != null) {
+				last = last.getNext();
+			}
+			
+			last.setNext(bag.grab());
+			count += bag.size();
 		}
-		
-		// Set new node's next-node reference to this node's next-node reference
-		temp.setNext(current.getNext());
-		
-		// Set this node's next-node reference to the new node
-		current.setNext(temp);
-		
-		count++;
 	}
 	
-	// Get the element at the given position.
-	public Object get(int index) {
-		// index must be 1 or higher
-		if(index <= 0)
-			return null;
+	public void getLast() {
+		StringNode last = head;
 		
-		StringNode current = head.getNext();
-		for(int i = 1; i < index; i++)
-		{
-			if(current.getNext() == null)
-				return null;
-			
-			current = current.getNext();
+		while (last.getNext() != null) {
+			last = last.getNext();
 		}
-		return current.getData();
 	}
 	
 	// Remove the element at the given position.
-	public boolean remove(int index) {
-		// Check if index is in range
-		if(index < 1 || index > size()) {
-			return false;
-		}
-		
+	public boolean remove(String key) {
 		StringNode current = head;
-		for (int i = 1; i < index; i++) {
-			// Exit if we reach end of list
-			if (current.getNext() == null) {
-				return false;
-			}
-			
+		StringNode prev = null;
+		
+		while (current.getNext() != null && current.getData() != key) {
+			prev = current;
 			current = current.getNext();
 		}
 		
-		current.setNext(current.getNext().getNext());
+		prev.setNext(current.getNext());
+		
 		// Decrease element count
 		count--;
 		
 		return true;
+	}
+	
+	public StringNode grab() {
+		return head;
+	}
+	
+	public int countOccurrences(String key) {
+		StringNode current = head;
+		int occurences = 0;
+		
+		while (current.getNext() != null) {
+			if (current.getData() == key) {
+				occurences++;
+			}
+			current = current.getNext();
+		}
+		
+		return occurences;
 	}
 	
 	// Get the number of elements in list.

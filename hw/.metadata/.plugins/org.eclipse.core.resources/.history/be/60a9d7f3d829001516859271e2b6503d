@@ -74,7 +74,6 @@ public class StringLinkedBag implements Cloneable {
 		return true;
 	}
 	
-	// Get the first item of the list
 	public StringNode grab() {
 		return head;
 	}

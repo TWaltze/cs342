@@ -7,10 +7,10 @@ public class Client {
 	public static String[] destinations = new String[]{"BOS", "SFO", "LAX", "SJC", "IAD"};
 
 	public static void main(String[] args) {
-		System.out.println("**Testing stack implementation**\n");
+		System.out.println("Testing stack implementation");
 		testStack();
 		
-		System.out.println("**Testing queue implementation**\n");
+		System.out.println("Testing queue implementation");
 		testQueue();
 	}
 	

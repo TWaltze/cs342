@@ -1,0 +1,136 @@
+package hw2;
+
+public class StringLinkedBag implements Cloneable {
+	private Node head;
+	private int count;
+	
+	// LinkedList constructor
+	public StringLinkedBag() {
+		head = new Node(null);
+		count = 0;
+	}
+	
+	// Appends the specified element to the end of this list.
+	public void add(Object data) {
+		Node temp = new Node(data);
+		Node current = head;
+		
+		// starting at the head node, crawl to the end of the list
+		while(current.getNext() != null) {
+			current = current.getNext();
+		}
+		
+		// the last node's "next" reference set to our new node
+		current.setNext(temp);
+		// increment the element count
+		count++;
+	}
+	
+	// Insert the element at the given position
+	public void add(Object data, int index) {
+		Node temp = new Node(data);
+		Node current = head;
+		
+		// Step through list until you reach the given positon
+		for (int i = 1; i < index && current.getNext() != null; i++) {
+			current = current.getNext();
+		}
+		
+		// Set new node's next-node reference to this node's next-node reference
+		temp.setNext(current.getNext());
+		
+		// Set this node's next-node reference to the new node
+		current.setNext(temp);
+		
+		count++;
+	}
+	
+	// Get the element at the given position.
+	public Object get(int index) {
+		// index must be 1 or higher
+		if(index <= 0)
+			return null;
+		
+		Node current = head.getNext();
+		for(int i = 1; i < index; i++)
+		{
+			if(current.getNext() == null)
+				return null;
+			
+			current = current.getNext();
+		}
+		return current.getData();
+	}
+	
+	// Remove the element at the given position.
+	public boolean remove(int index) {
+		// Check if index is in range
+		if(index < 1 || index > size()) {
+			return false;
+		}
+		
+		Node current = head;
+		for (int i = 1; i < index; i++) {
+			// Exit if we reach end of list
+			if (current.getNext() == null) {
+				return false;
+			}
+			
+			current = current.getNext();
+		}
+		
+		current.setNext(current.getNext().getNext());
+		// Decrease element count
+		count--;
+		
+		return true;
+	}
+	
+	// Get the number of elements in list.
+	public int size() {
+		return count;
+	}
+	
+	public String toString() {
+		Node current = head.getNext();
+		String output = "";
+		
+		while(current != null) {
+			output += "[" + current.getData().toString() + "]";
+			current = current.getNext();
+		}
+		
+		return output;
+	}
+	
+	private class Node {
+		Node next;		// Next node in list
+		Object data;	// Stored data
+		
+		public Node(Object data) {
+			next = null;
+			this.data = data;
+		}
+		
+		public Node(Object data, Node next) {
+			this.next = next;
+			this.data = data;
+		}
+		
+		public Object getData() {
+			return this.data;
+		}
+		
+		public void setData(Object data) {
+			this.data = data;
+		}
+		
+		public Node getNext() {
+			return next;
+		}
+		
+		public void setNext(Node next) {
+			this.next = next;
+		}
+	}
+}

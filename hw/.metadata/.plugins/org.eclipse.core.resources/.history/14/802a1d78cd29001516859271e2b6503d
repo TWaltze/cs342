@@ -1,0 +1,147 @@
+package hw2;
+
+public class StringLinkedBag implements Cloneable {
+	private Node head;
+	private int count;
+	
+	// LinkedList constructor
+	public StringLinkedBag() {
+		head = new Node(null);
+		count = 0;
+	}
+	
+	// Appends the specified element to the end of this list.
+	public void add(Object data) {
+		Node temp = new Node(data);
+		Node current = head;
+		
+		// starting at the head node, crawl to the end of the list
+		while(current.getNext() != null) {
+			current = current.getNext();
+		}
+		
+		// the last node's "next" reference set to our new node
+		current.setNext(temp);
+		// increment the element count
+		count++;
+	}
+	
+	// Insert the element at the given position
+	public void add(Object data, int index) {
+		Node temp = new Node(data);
+		Node current = head;
+		
+		// Step through list until you reach the given positon
+		for (int i = 1; i < index && current.getNext() != null; i++) {
+			current = current.getNext();
+		}
+		
+		// Set new node's next-node reference to this node's next-node reference
+		temp.setNext(current.getNext());
+		
+		// Set this node's next-node reference to the new node
+		current.setNext(temp);
+		
+		count++;
+	}
+	
+	// Get the element at the given position.
+	public Object get(int index) {
+		// index must be 1 or higher
+		if(index <= 0)
+			return null;
+		
+		Node current = head.getNext();
+		for(int i = 1; i < index; i++)
+		{
+			if(current.getNext() == null)
+				return null;
+			
+			current = current.getNext();
+		}
+		return current.getData();
+	}
+	
+	// Remove the element at the given position.
+	public boolean remove(int index) {
+		// if the index is out of range, exit
+		if(index < 1 || index > size())
+			return false;
+		
+		Node current = head;
+		for(int i = 1; i < index; i++)
+		{
+			if(current.getNext() == null)
+				return false;
+			
+			current = current.getNext();
+		}
+		current.setNext(current.getNext().getNext());
+		count--; // decrement the number of elements variable
+		return true;
+	}
+	
+	// Get the number of elements in list.
+	public int size() {
+		return count;
+	}
+	
+	public String toString() {
+		Node current = head.getNext();
+		String output = "";
+		
+		while(current != null) {
+			output += "[" + current.getData().toString() + "]";
+			current = current.getNext();
+		}
+		
+		return output;
+	}
+	
+	private class Node {
+		// reference to the next node in the chain,
+		// or null if there isn't one.
+		Node next;
+		
+		// data carried by this node.
+		// could be of any type you need.
+		Object data;
+		
+
+		// Node constructor
+		public Node(Object _data)
+		{
+			next = null;
+			data = _data;
+		}
+		
+		// another Node constructor if we want to
+		// specify the node to point to.
+		public Node(Object _data, Node _next)
+		{
+			next = _next;
+			data = _data;
+		}
+		
+		// these methods should be self-explanatory
+		public Object getData()
+		{
+			return data;
+		}
+		
+		public void setData(Object _data)
+		{
+			data = _data;
+		}
+		
+		public Node getNext()
+		{
+			return next;
+		}
+		
+		public void setNext(Node _next)
+		{
+			next = _next;
+		}
+	}
+}

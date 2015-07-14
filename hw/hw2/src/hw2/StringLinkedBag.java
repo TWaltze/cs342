@@ -1,0 +1,93 @@
+package hw2;
+
+public class StringLinkedBag implements Cloneable {
+	private StringNode head;
+	private int count;
+	
+	// LinkedList constructor
+	public StringLinkedBag() {
+		head = new StringNode(null);
+		count = 0;
+	}
+	
+	// Appends the specified element to the end of this list.
+	public void add(Object data) {
+		StringNode temp = new StringNode(data);
+		StringNode current = head;
+		
+		// starting at the head node, crawl to the end of the list
+		while(current.getNext() != null) {
+			current = current.getNext();
+		}
+		
+		// the last node's "next" reference set to our new node
+		current.setNext(temp);
+		// increment the element count
+		count++;
+	}
+	
+	// Insert the element at the given position
+	public void add(Object data, int index) {
+		StringNode temp = new StringNode(data);
+		StringNode current = head;
+		
+		// Step through list until you reach the given positon
+		for (int i = 1; i < index && current.getNext() != null; i++) {
+			current = current.getNext();
+		}
+		
+		// Set new node's next-node reference to this node's next-node reference
+		temp.setNext(current.getNext());
+		
+		// Set this node's next-node reference to the new node
+		current.setNext(temp);
+		
+		count++;
+	}
+	
+	// Get the element at the given position.
+	public Object get(int index) {
+		// index must be 1 or higher
+		if(index <= 0)
+			return null;
+		
+		StringNode current = head.getNext();
+		for(int i = 1; i < index; i++)
+		{
+			if(current.getNext() == null)
+				return null;
+			
+			current = current.getNext();
+		}
+		return current.getData();
+	}
+	
+	// Remove the element at the given position.
+	public boolean remove(int index) {
+		// Check if index is in range
+		if(index < 1 || index > size()) {
+			return false;
+		}
+		
+		StringNode current = head;
+		for (int i = 1; i < index; i++) {
+			// Exit if we reach end of list
+			if (current.getNext() == null) {
+				return false;
+			}
+			
+			current = current.getNext();
+		}
+		
+		current.setNext(current.getNext().getNext());
+		// Decrease element count
+		count--;
+		
+		return true;
+	}
+	
+	// Get the number of elements in list.
+	public int size() {
+		return count;
+	}
+}

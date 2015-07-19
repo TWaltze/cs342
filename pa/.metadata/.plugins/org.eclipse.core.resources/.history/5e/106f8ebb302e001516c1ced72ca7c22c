@@ -1,0 +1,43 @@
+package pa2;
+
+public class StackArray<Type> {
+    private Type[] items;
+    private int total;
+
+    public StackArray() {
+        items = (Type[]) new Object[2];
+    }
+
+    private void resize(int capacity) {
+        Type[] tmp = (Type[]) new Object[capacity];
+        
+        System.arraycopy(items, 0, tmp, 0, total);
+        items = tmp;
+    }
+
+    public StackArray<Type> push(Type item) {
+    	// Increase size of array if it's already full
+        if (items.length == total) {
+        	resize(items.length * 2);
+        }
+        
+        items[total++] = item;
+        return this;
+    }
+
+    public Type pop() {
+        if (total == 0) {
+        	throw new java.util.NoSuchElementException();
+        }
+        
+        Type ele = items[--total];
+        items[total] = null;
+        if (total > 0 && total == items.length / 4) resize(items.length / 2);
+        return ele;
+    }
+
+    public String toString() {
+        return java.util.Arrays.toString(items);
+    }
+
+}

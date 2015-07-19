@@ -47,10 +47,6 @@ public class StackArray<Type> {
         return item;
     }
     
-    public Type peek() {
-    	return items[total - 1];
-    }
-    
     public Boolean isEmpty() {
     	return total == 0;
     }

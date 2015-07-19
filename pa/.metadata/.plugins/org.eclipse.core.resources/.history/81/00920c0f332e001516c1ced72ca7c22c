@@ -46,20 +46,6 @@ public class StackArray<Type> {
 
         return item;
     }
-    
-    public Type peek() {
-    	return items[total - 1];
-    }
-    
-    public Boolean isEmpty() {
-    	return total == 0;
-    }
-    
-    public void clear() {
-    	// Reset properties to their initial values
-    	items = (Type[]) new Object[2];
-    	total = 0;
-    }
 
     public String toString() {
         return java.util.Arrays.toString(items);

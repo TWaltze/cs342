@@ -12,8 +12,8 @@ public class Palindrome {
 		System.out.print("Enter the string you want to check: ");
 		String text = keyboard.next();
 		
-		// Clean string. Remove non-alphanumeric characters. Normalize case.
-		text = text.replaceAll("[^A-Za-z0-9]", "").toUpperCase();
+		// Clean string. Remove non-alphanumeric characters
+		text = text.replaceAll("[^A-Za-z0-9]", "");
 		
 		// Create a stack holding the string in reverse order
 		for (int i = 0; i < text.length(); i++) {

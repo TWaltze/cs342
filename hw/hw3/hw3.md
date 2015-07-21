@@ -8,6 +8,7 @@ Homework 3
 
 Assuming the following code exists:
 
+
     public class Node<E> {
         public E data;
         public Node<E> link;
@@ -19,14 +20,18 @@ Assuming the following code exists:
         // other methods here
     }
 
+
 1. Write the push method for the LinkedStack<E> class. (25 points)
+
 
         public void push(Node item) {
             item.link = top;
             top = item;
         }
 
+
 Assuming the following code exists:
+
 
     public class Node<E> {
         public E data;
@@ -41,12 +46,18 @@ Assuming the following code exists:
         // other methods here
     }
 
+
 2. Write the add method for the LinkedQueue<E> class (25 points)
 
+
         public void add(Node item) {
-            rear.link = item;
+            if (!isEmpty()) {
+                rear.link = item;
+            }
+
             rear = item;
         }
+
 
 3. When writing a data structure, the design goal should be to minimize the work and error conditions for the client. Having said that, what mechanisms should/do stacks and queues provide to help clients not run into error conditions? Explain your answer. (25 points)
 

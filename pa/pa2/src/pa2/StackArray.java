@@ -5,7 +5,11 @@ public class StackArray<Type> {
     private int total;		// Counter of actual items in array
 
     public StackArray() {
-        items = (Type[]) new Object[2];
+        this(2);
+    }
+    
+    public StackArray(int size) {
+    	items = (Type[]) new Object[size];
     }
 
     private void resize(int size) {
@@ -48,6 +52,11 @@ public class StackArray<Type> {
     }
     
     public Type peek() {
+    	// Throw an error if there isn't an item to remove
+        if (total == 0) {
+        	throw new java.util.NoSuchElementException();
+        }
+        
     	return items[total - 1];
     }
     
@@ -59,6 +68,14 @@ public class StackArray<Type> {
     	// Reset properties to their initial values
     	items = (Type[]) new Object[2];
     	total = 0;
+    }
+    
+    public int size() {
+    	return total;
+    }
+    
+    public Type get(int position) {
+    	return items[position];
     }
 
     public String toString() {

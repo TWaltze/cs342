@@ -1,0 +1,60 @@
+package pa2;
+
+public class NQueens {
+	
+	public static void main(String[] args) {
+        final int QUEENS = 40;
+        queens(QUEENS);
+    }
+     
+    public static void queens(int n) {
+        boolean success = false;
+         
+        // row = the row within the stack, column = the row's integer value
+        StackArray<Integer> s = new StackArray<Integer>(n);
+        s.push(1);
+         
+         
+        while (!success && !s.isEmpty()){
+            int x=0;    // placeholder for when we pop values
+            boolean conflict = false;
+             
+            // check for conflicts
+            for (int i=1; i<s.size(); i++){
+                int deltarows = s.size()-i;
+                if (    // no need to check row, stack preempts row conflict
+                        s.peek()==s.itemAt(i) ||            // same column
+                        s.peek()==s.itemAt(i)+deltarows ||  // same diagonal
+                        s.peek()==s.itemAt(i)-deltarows     // same diagonal
+                    ) conflict = true;
+            }
+             
+            if (conflict){
+                while (s.peek()==n)
+                    x=s.pop();
+                if (!s.isEmpty())
+                    s.push(s.pop()+1);
+                else
+                    s.push(x+1);
+            } else if (!conflict && s.size()==n){
+                success = true;
+            } else {
+                // new row, so try column 1
+                s.push(1);
+            }
+        }
+         
+        // print out the board with the queens
+        for (int x=1; x<=s.size(); x++){
+            for (int y=1; y<=n; y++){
+                if (s.itemAt(x)==y)
+                    System.out.print("X ");
+                else
+                    System.out.print("O ");
+            }
+            System.out.println();
+        }
+         
+    }
+
+}

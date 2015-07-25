@@ -21,8 +21,8 @@ public class NQueens {
         /**
          * Check for diagonal conflicts, y = mx + b
 		 *
-         * Find the slope of the newest queen and compare it to all
-         * the other queens. If the differences in x and y are equal,
+         * Find the slope of the last queen location on the stack and compare it to
+         * all the other queen positions. If the differences in x and y are equal,
          * then the newest queen on the stack conflicts with another queen.
          */
         int size = board.size() - 1;
@@ -46,14 +46,13 @@ public class NQueens {
     }
  
     private StackArray<Integer> compute(StackArray<Integer> board){
-    	// Base case: When the board size and n are equal, we've found
-    	// a valid configuration for all queens.
+        // If the board size is equal to n we have a valid configuration
         if (this.n == board.size()) {
             return board;
         }
         
         for (int i = 0; i < this.n; i++) {
-            // Push i (a column) onto the stack (next row)
+            // Push i onto the stack
         	board.push(i);
             
             // Check for valid placement
@@ -61,13 +60,13 @@ public class NQueens {
                 // Try to place something in the next column
                 StackArray<Integer> tmp = this.compute(board);
                 
-                // Non-null value means a valid configuration.
                 if (tmp != null) {
+                    // Non-null value means a valid configuration.
                     return tmp;
                 }
             }
             
-            // No valid configuration. Backtrack. 
+            // Backtrack because there is no valid configuration
             board.pop();
         }
         

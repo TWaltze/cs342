@@ -21,15 +21,17 @@ public class BTNode<E> {
         right = initialRight;
     }
     
-    public E getData( ) {
+    public E getData() {
     	return data;
     }
     
-    public BTNode<E> getLeft( ) {
+    public BTNode<E> getLeft() {
         return left;
     }
     
-    public E getLeftmostData( ) {
+    public E getLeftmostData() {
+    	// No more left trees to traverse,
+    	// return current data
         if (left == null) {
             return data;
         } else {
@@ -37,11 +39,13 @@ public class BTNode<E> {
         }
     }
     
-    public BTNode<E> getRight( ) {
+    public BTNode<E> getRight() {
         return right;
     }
     
-    public E getRightmostData( ) {
+    public E getRightmostData() {
+    	// No more right trees to traverse,
+    	// return current data
         if (right == null) {
             return data;
         } else {
@@ -146,12 +150,15 @@ public class BTNode<E> {
     }
     
     public static <E> BTNode<E> treeCopy(BTNode<E> source) {
+    	// Recursively create new nodes that are the left/right of parent node
     	BTNode<E> root = new BTNode<E>(source.getData(), treeCopy(source.getLeft()), treeCopy(source.getRight()));
 
         return root;
     }
     
     public static <E> long treeSize(BTNode<E> root) {
+    	// recursively add 1 for the current node,
+    	// plus the size of its left/right sides
         return 1 + treeSize(root.getLeft()) + treeSize(root.getRight());
     }
 }

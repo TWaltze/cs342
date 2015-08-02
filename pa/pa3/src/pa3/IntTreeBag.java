@@ -27,6 +27,7 @@ public class IntTreeBag implements Cloneable {
     *   Indicates insufficient memory a new IntBTNode.
     **/
     public void add(int element) {
+    	// add directly to root if it doesn't already exist
         if (root == null) {
             root = new BTNode<Integer>(element);
         } else {
@@ -103,6 +104,7 @@ public class IntTreeBag implements Cloneable {
         Iterator<Integer> it = iteratorInOrder();
         
         while (it.hasNext()) {
+        	// target found, increase count
             if (targetObj.equals(it.next())) {
                 amount++;
             }

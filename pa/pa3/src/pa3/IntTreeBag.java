@@ -11,6 +11,12 @@ public class IntTreeBag implements Cloneable
    //   2. The instance variable root is a reference to the root of the
    //      binary search tree (or null for an empty tree).
    private BTNode<Integer> root;
+   private int count;
+   
+   public IntTreeBag() {
+	   root = null;
+	   count = 0;
+   }
 
 
    /**
@@ -22,9 +28,28 @@ public class IntTreeBag implements Cloneable
    * @exception OutOfMemoryError
    *   Indicates insufficient memory a new IntBTNode.
    **/
-   public void add(int element)
-   {
-      // Implemented by student.
+   public void add(int element) {
+	   if (root == null) {
+		   root = new BTNode<Integer>(element);
+	   } else {
+		   add(element, root);
+	   }
+	   
+	   count++;
+   }
+   
+   private void add(int element, BTNode<Integer> parent) {
+	   if (((Comparable<Integer>)element).compareTo(parent.getData()) < 0) {
+		   if (parent.getLeft() == null) {
+			   parent.setLeft(new BTNode<Integer>(element));
+		   } else {
+			   add(element, parent.getLeft());
+		   }
+	   } else if (parent.getRight() == null) {
+		   parent.setRight(new BTNode<Integer>(element));
+	   } else {
+		   add(element, parent.getRight());
+	   }
    }
 
 
@@ -41,8 +66,7 @@ public class IntTreeBag implements Cloneable
    * @exception OutOfMemoryError
    *   Indicates insufficient memory to increase the size of the bag.
    **/
-   public void addAll(IntTreeBag addend)
-   {
+   public void addAll(IntTreeBag addend) {
       // Implemented by student.
    }
 
@@ -57,8 +81,7 @@ public class IntTreeBag implements Cloneable
    * @exception OutOfMemoryError
    *   Indicates insufficient memory for creating the clone.
    **/
-   public Object clone( )
-   {  // Clone an IntTreeBag object.
+   public Object clone( ) {
       // Student will replace this return statement with their own code:
       return null;
    }
@@ -72,8 +95,7 @@ public class IntTreeBag implements Cloneable
    * @return
    *   the number of times that <CODE>target</CODE> occurs in this bag
    **/
-   public int countOccurrences(int target)
-   {
+   public int countOccurrences(int target) {
       // Student will replace this return statement with their own code:
       return 0;
    }
@@ -88,10 +110,97 @@ public class IntTreeBag implements Cloneable
    *   <CODE>target</CODE> has been removed and the method returns true.
    *   Otherwise the bag remains unchanged and the method returns false.
    **/
-   private boolean remove(int target)
-   {
-      // Student will replace this return statement with their own code:
-      return false;
+   public boolean remove(int target) {
+      return remove(new Integer(target)) != null;
+   }
+   
+   private Integer remove(Integer target) {
+	    Integer result = null;
+	    
+	    if (!isEmpty()) {
+	        // target is in root
+	        if (((Comparable)target).equals(root.getData())) {
+	            result =  root.getData();
+	            root = replacement(root); // move inorder successor into the root
+	            count--;
+	        } else { // the element is not in the root but may be elsewhere: start search
+	            boolean found = false;
+	            BTNode<Integer> current;
+	            
+	            // root becomes parent
+	            BTNode<Integer> parent = root;
+	            
+	            // search for target in the left subtree of root
+	            if (((Comparable)target).compareTo(root.getData()) < 0) {
+	                current = root.getLeft();
+	            } else { // search for target in the right subtree of root
+	                current = root.getRight();
+	            }
+	            
+	            while (current != null && !found) { // go until search hits a leaf
+	                if (target.equals(current.getData())) {
+	                    found = true;
+	                    count--;
+	                    result = current.getData();
+	                    
+	                    // if the target is a left child of parent
+	                    // then replacement becomes parent's left subtree 
+	                    if (current == parent.getLeft()) {         
+	                        // point to replacement            
+	                        parent.setLeft(replacement(current));
+	                    } else { // or replacement becomes parent's right child
+	                        parent.setRight(replacement(current));
+	                    }
+	                } else { // make current element into parent and continue search
+	                    parent = current; // move parent pointer down
+	                    
+	                    if (((Comparable)target).compareTo(current.getData()) < 0) {
+	                        current = current.getLeft();                   
+	                    } else {
+	                        current = current.getRight();
+	                    }
+	                }
+	            }
+	            
+	            if (!found) {
+	                return null;
+	            }
+	        }
+	    }
+
+	    return result;
+   }
+   
+   private BTNode<Integer> replacement(BTNode<Integer> node) {
+	    BTNode<Integer> result = null;
+	    
+	    if ((node.getLeft() == null) && (node.getRight() == null)) {
+	        result = null;
+	    } else if ((node.getLeft() != null) && (node.getRight() == null)) {
+	        result = node.getLeft();
+	    } else if ((node.getLeft() == null) && (node.getRight() != null)) {
+	        result = node.getRight();
+	    } else {
+	        BTNode<Integer> current = node.getRight();
+	        BTNode<Integer> parent = node;
+
+	        while (current.getLeft() != null) {
+	            parent = current;
+	            current = current.getLeft();
+	        }
+
+	        if (node.getRight() == current) {
+	            current.setLeft(node.getLeft());
+	        } else {
+	            parent.setLeft(current.getRight());
+	            current.setRight(node.getRight());
+	            current.setLeft(node.getLeft());
+	        }
+
+	        result = current;
+	    }
+
+	    return result;
    }
 
 
@@ -101,10 +210,12 @@ public class IntTreeBag implements Cloneable
    * @return
    *   the number of elements in this bag
    **/
-   public long size( )
-   {
-      // Student will replace this return statement with their own code:
-      return 0;
+   public long size( ) {
+      return count;
+   }
+   
+   public boolean isEmpty() {
+	   return count == 0;
    }
 
 
@@ -123,8 +234,7 @@ public class IntTreeBag implements Cloneable
    * @exception OutOfMemoryError
    *   Indicates insufficient memory for the new bag.
    **/
-   public static IntTreeBag union(IntTreeBag b1, IntTreeBag b2)
-   {
+   public static IntTreeBag union(IntTreeBag b1, IntTreeBag b2) {
 	   // Student will replace this return statement with their own code:
 	   return null;
    }
@@ -135,13 +245,11 @@ public class IntTreeBag implements Cloneable
    }
 
    public Iterator<Integer> iteratorInOrder() {
-	   // Student will replace this return statement with their own code:
-	   return null;
+	   return root.inorderList().listIterator();
    }
 
    public Iterator<Integer> iteratorPostOrder() {
 	   // Student will replace this return statement with their own code:
 	   return null;
    }
-
 }

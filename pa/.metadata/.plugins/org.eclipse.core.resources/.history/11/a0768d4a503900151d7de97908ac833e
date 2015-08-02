@@ -1,0 +1,118 @@
+package pa3;
+
+import java.util.ArrayList;
+
+public class BTNode<E>
+{
+   // Invariant of the BTNode<E> class:
+   //   1. Each node has one reference to an E Object, stored in the instance
+   //      variable data.
+   //   2. The instance variables left and right are references to the node's
+   //      left and right children.
+   private E data;
+   private BTNode<E> left, right;
+
+   public BTNode(E initialData, BTNode<E> initialLeft, BTNode<E> initialRight)
+   {
+		data = initialData;
+		left = initialLeft;
+		right = initialRight;
+   }
+
+   public E getData( )
+   {
+      return data;
+
+   }
+
+   public BTNode<E> getLeft( )
+   {
+      return left;
+   }
+
+   public E getLeftmostData( )
+   {
+      if (left == null) {
+    	  return data;
+      } else {
+    	  return left.getLeftmostData();
+      }
+   }
+
+   public BTNode<E> getRight( )
+   {
+      return right;
+   }
+
+   public E getRightmostData( )
+   {
+	   if (right == null) {
+    	  return data;
+      } else {
+    	  return left.getRightmostData();
+      }
+   }
+
+   public void inorderList (ArrayList<E> list) {
+		// Student will write code to traverse this node using In-Order traversal
+		// and populate the list with the node data in the order that the nodes are visited.
+   }
+
+   public void preorderList (ArrayList<E> list)
+   {
+		// Student will write code to traverse this node using Pre-Order traversal
+		// and populate the list with the node data in the order that the nodes are visited.
+   }
+
+   public void postorderList (ArrayList<E> list)
+   {
+		// Student will write code to traverse this node using Post-Order traversal
+		// and populate the list with the node data in the order that the nodes are visited.
+   }
+
+   public boolean isLeaf( )
+   {
+      return right == null && left == null;
+   }
+
+   public BTNode<E> removeLeftmost( )
+   {
+      // Student will replace this return statement with their own code. This code will
+	  // remove the left most node and return a reference to the root of the new (smaller) tree:
+      return null;
+   }
+
+   public BTNode<E> removeRightmost( )
+   {
+      // Student will replace this return statement with their own code. This code will
+	  // remove the right most node and return a reference to the root of the new (smaller) tree:
+      return null;
+   }
+
+   public void setData(E newData)
+   {
+	   data = newData;
+   }
+
+   public void setLeft(BTNode<E> newLeft)
+   {
+	   left = newLeft;
+   }
+
+   public void setRight(BTNode<E> newRight)
+   {
+       right = newRight;
+   }
+
+   public static <E> BTNode<E> treeCopy(BTNode<E> source)
+   {
+	   // Student will replace this code to copy the tree starting with this node
+       return null;
+   }
+
+   public static <E> long treeSize(BTNode<E> root)
+   {
+	   return 1 + treeSize(root.getLeft()) + treeSize(root.getRight());
+   }
+
+}

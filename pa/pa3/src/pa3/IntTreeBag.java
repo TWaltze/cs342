@@ -18,7 +18,6 @@ public class IntTreeBag implements Cloneable
 	   count = 0;
    }
 
-
    /**
    * Insert a new element into this bag.
    * @param <CODE>element</CODE>
@@ -52,7 +51,6 @@ public class IntTreeBag implements Cloneable
 	   }
    }
 
-
    /**
    * Add the contents of another bag to this bag.
    * @param <CODE>addend</CODE>
@@ -66,10 +64,13 @@ public class IntTreeBag implements Cloneable
    * @exception OutOfMemoryError
    *   Indicates insufficient memory to increase the size of the bag.
    **/
-   public void addAll(IntTreeBag addend) {
-      // Implemented by student.
+   public void addAll(IntTreeBag append) {
+	   Iterator<Integer> it = append.iteratorInOrder();
+	   
+	   while (it.hasNext()) {
+			add(it.next());
+		}
    }
-
 
    /**
    * Generate a copy of this bag.
@@ -86,7 +87,6 @@ public class IntTreeBag implements Cloneable
       return null;
    }
 
-
    /**
    * Accessor method to count the number of occurrences of a particular element
    * in this bag.
@@ -96,10 +96,19 @@ public class IntTreeBag implements Cloneable
    *   the number of times that <CODE>target</CODE> occurs in this bag
    **/
    public int countOccurrences(int target) {
-      // Student will replace this return statement with their own code:
-      return 0;
+      int amount = 0;
+      Integer targetObj = new Integer(target);
+      
+      Iterator<Integer> it = iteratorInOrder();
+	   
+	   while (it.hasNext()) {
+			if (targetObj.equals(it.next())) {
+				amount++;
+			}
+		}
+	   
+	   return amount;
    }
-
 
    /**
    * Remove one copy of a specified element from this bag.
@@ -203,7 +212,6 @@ public class IntTreeBag implements Cloneable
 	    return result;
    }
 
-
    /**
    * Determine the number of elements in this bag.
    * @param - none
@@ -217,7 +225,6 @@ public class IntTreeBag implements Cloneable
    public boolean isEmpty() {
 	   return count == 0;
    }
-
 
    /**
    * Create a new bag that contains all the elements from two other bags.
@@ -235,13 +242,16 @@ public class IntTreeBag implements Cloneable
    *   Indicates insufficient memory for the new bag.
    **/
    public static IntTreeBag union(IntTreeBag b1, IntTreeBag b2) {
-	   // Student will replace this return statement with their own code:
-	   return null;
+	   IntTreeBag bag = new IntTreeBag();
+	   
+	   bag.addAll(b1);
+	   bag.addAll(b2);
+	   
+	   return bag;
    }
 
    public Iterator<Integer> iteratorPreOrder() {
-	   // Student will replace this return statement with their own code:
-	   return null;
+	   return root.preorderList().listIterator();
    }
 
    public Iterator<Integer> iteratorInOrder() {
@@ -249,7 +259,6 @@ public class IntTreeBag implements Cloneable
    }
 
    public Iterator<Integer> iteratorPostOrder() {
-	   // Student will replace this return statement with their own code:
-	   return null;
+	   return root.postorderList().listIterator();
    }
 }

@@ -81,11 +81,11 @@ public class BTNode<E> {
         list.add(data);
         
         if (left != null) {
-            left.inorderList(list);
+            left.preorderList(list);
         }
         
         if (right != null) {
-            right.inorderList(list);
+            right.preorderList(list);
         }
     }
     
@@ -99,11 +99,11 @@ public class BTNode<E> {
     
     private void postorderList(ArrayList<E> list) {
         if (left != null) {
-            left.inorderList(list);
+            left.postorderList(list);
         }
         
         if (right != null) {
-            right.inorderList(list);
+            right.postorderList(list);
         }
         
         list.add(data);
